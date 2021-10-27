@@ -1,8 +1,5 @@
-air_pressure_at_sea_level,air_temperature,air_temperature_percentile_10,air_temperature_percentile_90,cloud_area_fraction,cloud_area_fraction_high,cloud_area_fraction_low,cloud_area_fraction_medium,dew_point_temperature,fog_area_fraction,relative_humidity,ultraviolet_index_clear_sky,wind_from_direction,wind_speed,wind_speed_of_gust,wind_speed_percentile_10,wind_speed_percentile_90,time,date
-998.6,11.7,10.9,12.4,48.8,0.0,46.9,2.2,7.5,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.7,10.9,12.4,48.8,0.0,46.9,2.2,7.5,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.7,10.9,12.4,48.8,0.0,46.9,2.2,7.5,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.9,11.1,12.6,48.8,0.0,46.9,2.2,7.6,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.9,11.1,12.6,48.8,0.0,46.9,2.2,7.6,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.9,11.1,12.6,48.8,0.0,46.9,2.2,7.6,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
-998.6,11.9,11.1,12.6,48.8,0.0,46.9,2.2,7.6,0.0,75.3,0.0,253.4,4.3,7.1,4.0,5.4,15:00:00,2021-10-27
+time,date,air_pressure_at_sea_level,air_temperature,air_temperature_percentile_10,air_temperature_percentile_90,cloud_area_fraction,cloud_area_fraction_high,cloud_area_fraction_low,cloud_area_fraction_medium,dew_point_temperature,fog_area_fraction,relative_humidity,ultraviolet_index_clear_sky,wind_from_direction,wind_speed,wind_speed_of_gust,wind_speed_percentile_10,wind_speed_percentile_90
+15:00:00,2021-10-27,998.7,12.1,11.4,12.9,39.4,0.0,38.6,0.9,8.2,0.0,76.6,0.0,253.0,4.2,6.9,4.0,5.5
+15:00:00,2021-10-27,998.7,12.1,11.4,12.9,39.4,0.0,38.6,0.9,8.2,0.0,76.6,0.0,253.0,4.2,6.9,4.0,5.5
+15:00:00,2021-10-27,998.7,12.1,11.4,12.9,39.4,0.0,38.6,0.9,8.2,0.0,76.6,0.0,253.0,4.2,6.9,4.0,5.5
+15:00:00,2021-10-27,998.7,12.1,11.4,12.9,39.4,0.0,38.6,0.9,8.2,0.0,76.6,0.0,253.0,4.2,6.9,4.0,5.5

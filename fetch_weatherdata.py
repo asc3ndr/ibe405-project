@@ -1,6 +1,4 @@
 import requests
-import pandas as pd
-import os.path
 from datetime import datetime, timedelta, timezone
 from pytz import timezone
 import schedule
@@ -8,16 +6,24 @@ import time
 from pymongo import MongoClient
 
 
+# Connect to MongoDB, implemented basic CRUD.
 class DB:
     def __init__(self):
         self.client = MongoClient("mongodb://localhost:27017/")
         self.db = self.client.ibe
         self.weatherdata = self.db.weatherdata
 
-    def add(self):
-        pass
+    def create(self, data: dict):
+        return self.weatherdata.insert_one(data)
+
+    def read(self):
+        return self.weatherdata.find({})
+
+    def get(self, datetime: str):
+        return self.weatherdata.find_one({"_id": datetime})
 
 
+# Get weatherdata
 def fetch():
     molde = "lat=62.73752&lon=7.15912"
     url = f"https://api.met.no/weatherapi/locationforecast/2.0/complete?{molde}"
@@ -29,12 +35,14 @@ def fetch():
     return response.json()
 
 
+# Return the current Oslo time
 def oslo_time():
     oslo_tid = datetime.now().astimezone(timezone("Europe/Oslo"))
     oslo_tid = (oslo_tid - timedelta(hours=1)).strftime("%Y-%m-%dT%H:00:00Z")
     return oslo_tid
 
 
+# Format dataentry
 def prepare_data(data: dict):
     # Try to handle timezone difference on hosted server
     now = oslo_time()
@@ -45,56 +53,29 @@ def prepare_data(data: dict):
         if entry["time"] == now:
             data = entry["data"]["instant"]["details"]
             date, time = now.replace("Z", "").split("T")
+            data["_id"] = entry["time"]
             data["time"] = time
             data["date"] = date
-
-    df = pd.DataFrame([data])
-
-    # Change order of columns, setting time and date first.
-    cols = df.columns.tolist()
-    cols = cols[-2:] + cols[:-2]
-    df = df[cols]
-
-    return df
+            return data
+    return None
 
 
-def append_to_csv(data: pd.DataFrame, path: str):
-    # Only write header if the file does not already exist
-    header = data.columns if not os.path.isfile(path) else False
-    return data.to_csv(path, mode="a", header=header, index=False)
+# Create scheduled job
+def job():
+    weatherDB = DB()
+    data = fetch()
+    data = prepare_data(data)
 
-
-def is_time(path: str):
-    # Check if there already is a row with current info
-    df = pd.read_csv(path)
-    result = oslo_time()
-    result = result.split("T")
-    date = result[0]
-    time = result[1].replace("Z", "")
-
-    return False if ((df["time"] == time) & (df["date"] == date)).any() else True
-
-    # NOTE: Verify that the date and time isn't already in the csv file before fetching new data and appending.
-
-
-def mainfunc():
-    print("Checking!")
-
-    run = is_time("test.csv")
-    if run:
-        data = fetch()
-        data = prepare_data(data)
-        append_to_csv(data=data, path="test.csv")
-        print("Data has been added!")
-    else:
-        print("Has already been run!")
+    if not weatherDB.get(oslo_time()):
+        return weatherDB.create(data)
+    return None
 
 
 if __name__ == "__main__":
-    mainfunc()
-    schedule.every(30).minutes.do(mainfunc)
+
+    job()
+    schedule.every(30).minutes.do(job)
 
     while True:
         schedule.run_pending()
         time.sleep(10)
-    # NOTE: Sleep? Schedule? Cron job? Some kind of event loop.

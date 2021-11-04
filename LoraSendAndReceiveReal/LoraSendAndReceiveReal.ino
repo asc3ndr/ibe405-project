@@ -8,7 +8,7 @@
 #include "DHT.h"
 #define DHTPIN 2  
 #define DHTTYPE DHT22
-
+#define LightSensor A1
 
 LoRaModem modem;
 
@@ -22,7 +22,11 @@ String appKey = SECRET_APP_KEY;
 DHT dht(DHTPIN, DHTTYPE);
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  pinMode(LightSensor, OUTPUT);
+  //Serial.begin(115200);
+
+  
+  
   dht.begin();
   
   // change this to your regional band (eg. US915, AS923, ...)
@@ -53,13 +57,35 @@ void loop() {
   Serial.println("Enter a message to send to network");
   Serial.println("(make sure that end-of-line 'NL' is enabled)");
 
-  String msg = Serial.readStringUntil('\n');
-
+  int val = analogRead(LightSensor);
+  //Serial.println(val);
+  String category = "";
+    if (val < 20){
+        category = "pitch black";
+    }
+    else if (val < 50){
+        category = "very dark";
+    }
+    else if (val < 150){
+        category = "dark";
+    }
+    else if (val < 250){
+        category = "dim";
+    }
+    else if (val < 500){
+        category = "bright";
+    }
+    else if (val > 500){
+        category = "very bright";
+    }
+    else {
+      Serial.println("Error");
+    }
   float h = dht.readHumidity();
   // Read temperature as Celsius (the default)
   float t = dht.readTemperature();
 
-  String values = (String) t+","+(String) h;
+  String values = (String) t+","+(String) h+","+(String) category;
   Serial.println(values);
   
   int err;

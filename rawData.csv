@@ -1,4 +1,4 @@
-Date,Time,Temperature,Humidity,Luminosity
+date,time,temperature,humidity,luminosity
 2021-11-4,18:00:00,21.5,34.1,very bright
 2021-11-4,18:00:00,21.5,17.5,very bright
 2021-11-4,18:00:00,21.5,35.6,very bright

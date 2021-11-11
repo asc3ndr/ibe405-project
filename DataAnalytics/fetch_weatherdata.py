@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import requests
 from datetime import datetime, timedelta, timezone
 from pytz import timezone

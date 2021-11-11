@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from bson.json_util import dumps
 from db import DB
 
